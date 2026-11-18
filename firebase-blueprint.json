@@ -1,0 +1,225 @@
+{
+  "entities": {
+    "UserPrivate": {
+      "title": "UserPrivate",
+      "description": "Private user account data and preferences isolated by owner UID.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "email": { "type": "string", "format": "email", "maxLength": 254 },
+        "username": { "type": "string", "minLength": 3, "maxLength": 24, "pattern": "^[a-z0-9_]+$" },
+        "displayName": { "type": "string", "minLength": 1, "maxLength": 50 },
+        "photoURL": { "type": "string", "maxLength": 500 },
+        "theme": { "type": "string", "enum": ["dark", "light"] },
+        "fcmToken": { "type": "string", "maxLength": 512 },
+        "EraPoints": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "username", "displayName", "theme", "createdAt", "updatedAt"]
+    },
+    "UserPublic": {
+      "title": "UserPublic",
+      "description": "Publicly visible user profile and throttled presence.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "username": { "type": "string", "minLength": 3, "maxLength": 24, "pattern": "^[a-z0-9_]+$" },
+        "displayName": { "type": "string", "minLength": 1, "maxLength": 50 },
+        "photoURL": { "type": "string", "maxLength": 500 },
+        "bio": { "type": "string", "maxLength": 160 },
+        "isOnline": { "type": "boolean" },
+        "lastSeen": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "username", "displayName", "isOnline", "lastSeen", "createdAt", "updatedAt"]
+    },
+    "UsernameLookup": {
+      "title": "UsernameLookup",
+      "description": "Unique Era username index mapping handle to UID without exposing PII.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "username": { "type": "string", "minLength": 3, "maxLength": 24, "pattern": "^[a-z0-9_]+$" },
+        "displayName": { "type": "string", "minLength": 1, "maxLength": 50 },
+        "photoURL": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "username", "displayName", "createdAt", "updatedAt"]
+    },
+    "FriendRequest": {
+      "title": "FriendRequest",
+      "description": "Friend request between two EraApp users.",
+      "type": "object",
+      "properties": {
+        "fromUid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "toUid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "fromUsername": { "type": "string", "minLength": 3, "maxLength": 24 },
+        "fromDisplayName": { "type": "string", "minLength": 1, "maxLength": 50 },
+        "fromPhotoURL": { "type": "string", "maxLength": 500 },
+        "toUsername": { "type": "string", "minLength": 3, "maxLength": 24 },
+        "toDisplayName": { "type": "string", "minLength": 1, "maxLength": 50 },
+        "toPhotoURL": { "type": "string", "maxLength": 500 },
+        "participants": { "type": "array" },
+        "status": { "type": "string", "enum": ["pending", "accepted", "rejected"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "fromUid",
+        "toUid",
+        "fromUsername",
+        "fromDisplayName",
+        "toUsername",
+        "toDisplayName",
+        "participants",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Chat": {
+      "title": "Chat",
+      "description": "Private 1-to-1 chat room metadata.",
+      "type": "object",
+      "properties": {
+        "chatId": { "type": "string", "minLength": 3, "maxLength": 260, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "participantUids": { "type": "array" },
+        "uid1": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "uid1Name": { "type": "string", "minLength": 1, "maxLength": 50 },
+        "uid1Username": { "type": "string", "minLength": 3, "maxLength": 24 },
+        "uid1Photo": { "type": "string", "maxLength": 500 },
+        "uid2": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "uid2Name": { "type": "string", "minLength": 1, "maxLength": 50 },
+        "uid2Username": { "type": "string", "minLength": 3, "maxLength": 24 },
+        "uid2Photo": { "type": "string", "maxLength": 500 },
+        "lastMessageText": { "type": "string", "maxLength": 500 },
+        "lastMessageType": { "type": "string", "enum": ["text", "image", "video", "location", "none"] },
+        "lastMessageSenderId": { "type": "string", "maxLength": 128 },
+        "lastMessageAt": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "chatId",
+        "participantUids",
+        "uid1",
+        "uid1Name",
+        "uid1Username",
+        "uid2",
+        "uid2Name",
+        "uid2Username",
+        "lastMessageText",
+        "lastMessageType",
+        "lastMessageSenderId",
+        "lastMessageAt",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Chat message supporting text, photo, video, and location.",
+      "type": "object",
+      "properties": {
+        "messageId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "chatId": { "type": "string", "minLength": 3, "maxLength": 260, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "senderId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "participantUids": { "type": "array" },
+        "type": { "type": "string", "enum": ["text", "image", "video", "location"] },
+        "text": { "type": "string", "maxLength": 2000 },
+        "mediaUrl": { "type": "string", "maxLength": 800 },
+        "locationLat": { "type": "number" },
+        "locationLng": { "type": "number" },
+        "locationLabel": { "type": "string", "maxLength": 200 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "readAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["messageId", "chatId", "senderId", "participantUids", "type", "createdAt"]
+    },
+    "TypingStatus": {
+      "title": "TypingStatus",
+      "description": "Ephemeral typing indicator per chat participant.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "participantUids": { "type": "array" },
+        "isTyping": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "participantUids", "isTyping", "updatedAt"]
+    },
+    "Streak": {
+      "title": "Streak",
+      "description": "Daily chat streak and freeze state between two EraApp users.",
+      "type": "object",
+      "properties": {
+        "streakId": { "type": "string", "minLength": 3, "maxLength": 260, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "participantUids": { "type": "array" },
+        "count": { "type": "number" },
+        "lastDate": { "type": "string", "maxLength": 10 },
+        "freezes": { "type": "number" },
+        "lastFreezeReset": { "type": "string", "maxLength": 10 },
+        "uid1LastSentDate": { "type": "string", "maxLength": 10 },
+        "uid2LastSentDate": { "type": "string", "maxLength": 10 },
+        "celebrated7": { "type": "boolean" },
+        "celebrated30": { "type": "boolean" },
+        "celebrated100": { "type": "boolean" },
+        "celebrated7SeenBy": { "type": "array" },
+        "celebrated30SeenBy": { "type": "array" },
+        "celebrated100SeenBy": { "type": "array" },
+        "goldHeaderUntil": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "streakId",
+        "participantUids",
+        "count",
+        "lastDate",
+        "freezes",
+        "lastFreezeReset",
+        "uid1LastSentDate",
+        "uid2LastSentDate",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{uid}": {
+      "schema": { "$ref": "#/entities/UserPrivate" },
+      "description": "Private user documents isolated to their owner."
+    },
+    "/users_public/{uid}": {
+      "schema": { "$ref": "#/entities/UserPublic" },
+      "description": "Public user profiles and throttled Last Seen status."
+    },
+    "/usernames/{username}": {
+      "schema": { "$ref": "#/entities/UsernameLookup" },
+      "description": "Exact-match handle lookup for adding friends without list queries."
+    },
+    "/friend_requests/{requestId}": {
+      "schema": { "$ref": "#/entities/FriendRequest" },
+      "description": "Friend requests and accepted friendships between users."
+    },
+    "/chats/{chatId}": {
+      "schema": { "$ref": "#/entities/Chat" },
+      "description": "1-to-1 private chat rooms."
+    },
+    "/chats/{chatId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/Message" },
+      "description": "Messages inside a 1-to-1 chat room (queried with limit 50)."
+    },
+    "/chats/{chatId}/typing/{uid}": {
+      "schema": { "$ref": "#/entities/TypingStatus" },
+      "description": "Typing indicator state for each chat participant."
+    },
+    "/streaks/{streakId}": {
+      "schema": { "$ref": "#/entities/Streak" },
+      "description": "Daily streak count and freeze inventory keyed by sorted {user1}_{user2}."
+    }
+  }
+}

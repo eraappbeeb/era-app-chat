@@ -1,0 +1,6 @@
+{
+  "name": "EraApp",
+  "description": "EraApp — Modern real-time private messaging with Telegram-grade elegance.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,75 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100dvh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
+    font-family: var(--font-sans);
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Subtle custom scrollbars for chat lists & message feeds */
+.era-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+.era-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.era-scroll::-webkit-scrollbar-thumb {
+  background: rgba(164, 19, 60, 0.25);
+  border-radius: 9999px;
+}
+
+.era-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(164, 19, 60, 0.45);
+}
+
+/* Telegram-like subtle wallpaper pattern */
+.era-wallpaper-dark {
+  background-color: #121212;
+  background-image: radial-gradient(rgba(164, 19, 60, 0.06) 1px, transparent 1px),
+    radial-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: 0 0, 14px 14px;
+}
+
+.era-wallpaper-light {
+  background-color: #EFEFF4;
+  background-image: radial-gradient(rgba(164, 19, 60, 0.055) 1px, transparent 1px),
+    radial-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: 0 0, 14px 14px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
